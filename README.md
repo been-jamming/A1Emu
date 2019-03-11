@@ -7,7 +7,7 @@ To build type
 
 which outputs an exectable named A1Emu.exe
 
-Next go to the working directory and copy a ROM for Integer Basic named "BASIC" (no extension) into that directory. the emulator will copy the first 4KB of that file's contents into address 0xE000.
+Next go to the working directory and copy a ROM for Integer Basic named "BASIC" (no extension) into that directory. The emulator will copy the first 4KB of that file's contents into address 0xE000.
 
 The emulator runs in a normal console without any GUI, just like the original Apple 1 worked. You are greeted with a `\` character. Type the following to start Apple 1 BASIC:
 
