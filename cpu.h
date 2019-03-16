@@ -32,6 +32,7 @@ struct CPU_6502{
 	uint16_t PC_reg;
 	//The bits status register are all of the processor flags, but it is its own register whose value can be pushed to the stack
 	uint8_t P_reg;
+	unsigned long long int cycles;
 };
 
 
