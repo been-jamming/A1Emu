@@ -63,7 +63,7 @@ tload SOME_FILE
 tstart read
 resume
 ```
-After entering the `resume` command, press enter one more time to finish giving telling the ACI to read to `0xE000`. After a few seconds, you should be greeted by `\`. At this point, press `|` to pause emulation and type
+After entering the `resume` command, press enter one more time to finish telling the ACI to read to `0xE000`. After a few seconds, you should be greeted by `\`. At this point, press `|` to pause emulation and type
 ```
 tstop
 resume
