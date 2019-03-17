@@ -228,6 +228,8 @@ int main(){
 				tape_active = 0;
 				tape_writing = 0;
 				tape_reading = 0;
+			} else if(!strcmp(str_buffer, "reset")){
+				reset_6502(&cpu, read_mem);
 			}
 
 			if(temp_char == ' ' && !strcmp(str_buffer, "tload")){
@@ -249,7 +251,20 @@ int main(){
 		if(!(count%200) && kbhit()){
 			key_hit = getch();
 
-			if(key_hit == '|'){
+			if(key_hit == '~'){//Emulate the control character
+				while(!kbhit()){}
+				key_hit = getch();
+				if(key_hit == 'd' || key_hit == 'D'){//Ctrl-D
+					memory[0xD010] = 0x84;
+					memory[0xD011] |= 0x80;
+				} else if(key_hit == 'g' || key_hit == 'G'){//Ctrl-G (bell character)
+					memory[0xD010] = 0x87;
+					memory[0xD011] |= 0x80;
+				} else if(key_hit == '`'){//Escape
+					memory[0xD010] = 0x9B;
+					memory[0xD011] |= 0x80;
+				}
+			} else if(key_hit == '|'){
 				DEBUG_STEP = 1;
 				printf("\n");
 			} else {
