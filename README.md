@@ -28,7 +28,7 @@ HELLO WORLD
 >
 ```
 
-If you want to load cassette storage into memory, you're going to need to uze Woz'z ACI. To do that, run
+If you want to load cassette storage into memory, you're going to need to uze Woz'z ACI. To do that, run from Woz's monitor (not BASIC)
 ```
 C100R
 ```
