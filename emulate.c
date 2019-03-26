@@ -168,11 +168,10 @@ int main(){
 	last_cycle_diff = 0;
 	next_tape_index = 0;
 	while(1){
-		/* Limit the speed of the processor to
-		 * a realistic 4nsec per instruction
-		 *
-		 * Will count cpu cycles soon to make
-		 * better timing.
+		/* Limit the speed of the processor
+		 * based on how many cycles the last
+		 * instruction took. The 6502 on the
+		 * Apple 1 was clocked at 1MHz.
 		 */
 		if(!DEBUG_STEP){
 			do{
