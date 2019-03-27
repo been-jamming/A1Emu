@@ -96,8 +96,10 @@ void write_mem(uint16_t index, uint8_t value){
 		printf("WRITE: %02x --> %04x\n", value, index);
 	}
 	if((index&0xFF0F) == 0xD002){
-		if((value&0x7F) == '\n' || (value&0x7F) == '\r'){
+		if((value&0x7F) == '\n' || (value&0x7F) == '\r'){//Print \n instead of \r
 			printf("\n");
+		} else if((value&0x7F) == 0x5F){//Make the 0x5F character map to ASCII backspace
+			printf("\b \b");
 		} else if((value&0x7F) >= 0x20 && (value&0x7F) != 127){
 			//Output a character
 			printf("%c", value&0x7F);
@@ -250,7 +252,10 @@ int main(){
 		if(!(count%200) && kbhit()){
 			key_hit = getch();
 
-			if(key_hit == '~'){//Emulate the control character
+			if(key_hit == 0x08){//Emulate the backspace character
+				memory[0xD010] = 0xDF;
+				memory[0xD011] |= 0x80;
+			} else if(key_hit == '~'){//Emulate the control character
 				while(!kbhit()){}
 				key_hit = getch();
 				if(key_hit == 'd' || key_hit == 'D'){//Ctrl-D
