@@ -272,6 +272,11 @@ int main(){
 				DEBUG_STEP = 1;
 				printf("\n");
 			} else {
+				//Convert lower case characters to upper case
+				if(key_hit >= 'a' && key_hit <= 'z'){
+					key_hit += 'A' - 'a';
+				}
+
 				memory[0xD010] = key_hit|0x80;
 				memory[0xD011] |= 0x80;
 			}
