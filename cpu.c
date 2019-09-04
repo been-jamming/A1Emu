@@ -11,9 +11,18 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
-#include <conio.h>
-#include <time.h>
+#include <sys/time.h>
 #include "cpu.h"
+
+#ifdef _WIN32
+
+#include <curses.h>
+
+#else
+
+#include <ncurses.h>
+
+#endif
 
 unsigned char CROSSED_PAGE;
 
@@ -1635,7 +1644,7 @@ void execute_6502(CPU_6502 *cpu, uint8_t (*read)(uint16_t), void (*write)(uint16
 		cpu->cycles += 2;
 	//Unknown operation
 	} else {
-		printf("Error: Unknown operation 0x%x\n", (int) opcode);
+		printw("Error: Unknown operation 0x%x\n", (int) opcode);
 		exit(1);
 	}
 }
