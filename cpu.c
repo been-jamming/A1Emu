@@ -107,7 +107,6 @@ void execute_6502(CPU_6502 *cpu, uint8_t (*read)(uint16_t), void (*write)(uint16
 	//The first byte at PC uniquely determines the operation
 	uint8_t opcode;
 	uint16_t address1;
-	uint16_t address2;
 
 	opcode = read(cpu->PC_reg);
 
