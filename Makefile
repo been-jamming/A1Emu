@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -O3
 
 default: cpu.o cpu.h emulate.c
-	$(CC) $(CFLAGS) cpu.o emulate.c -o A1Emu
+	$(CC) $(CFLAGS) cpu.o emulate.c -lncurses -o A1Emu
 
 cpu.o: cpu.c cpu.h
 	$(CC) $(CFLAGS) -c cpu.c

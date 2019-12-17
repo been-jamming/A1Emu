@@ -51,11 +51,13 @@ void load_tape(char *file_name){
 	FILE *fp;
 	fp = fopen(file_name, "rb");
 	printw("Reading from tape file named \"%s\"\n", file_name);
-	if(fp){
-		fread(tape, 4, 0x100000, fp);
+	if(fp && fread(tape, 4, 0x100000, fp) == 0x100000){
 		fclose(fp);
 	} else {
 		printw("file error\n");
+		if(fp){
+			fclose(fp);
+		}
 	}
 
 	return;
@@ -65,11 +67,13 @@ void store_tape(char *file_name){
 	FILE *fp;
 	printw("Storing tape to file named \"%s\"\n", file_name);
 	fp = fopen(file_name, "wb");
-	if(fp){
-		fwrite(tape, 4, 0x100000, fp);
+	if(fp && fwrite(tape, 4, 0x100000, fp) == 0x100000){
 		fclose(fp);
 	} else {
 		printw("file error\n");
+		if(fp){
+			fclose(fp);
+		}
 	}
 }
 
@@ -154,10 +158,12 @@ int main(){
 
 	//Load Integer Basic
 	fp = fopen("BASIC", "rb");
-	if(fp){
-		fread(memory + 0xE000, 1, 0x1000, fp);
+	if(fp && fread(memory + 0xE000, 1, 0x1000, fp) == 0x1000){
 		fclose(fp);
 	} else {
+		if(fp){
+			fclose(fp);
+		}
 		printw("Warning: could not load file named \"BASIC\".\nStarting without apple 1 BASIC loaded.\nApple 1 basic can still be loaded from a cassette file into address 0xE000.\n---\n");
 		printw("Press any key to continue...\n");
 		getch();
@@ -166,11 +172,13 @@ int main(){
 	
 	//Load Woz's ACI
 	fp = fopen("WOZACI", "rb");
-	if(fp){
-		fread(memory + 0xC000, 1, 0x100, fp);
+	if(fp && fread(memory + 0xC000, 1, 0x100, fp) == 0x100){
 		fclose(fp);
 	} else {
-		fprintf(stderr, "file error\n");
+		if(fp){
+			fclose(fp);
+		}
+		fprintf(stderr, "Could not load WOZACI due to file error\n");
 		exit(1);
 	}
 
@@ -178,11 +186,13 @@ int main(){
 
 	//Load Woz's monitor
 	fp = fopen("WOZMON", "rb");
-	if(fp){
-		fread(memory + 0xFF00, 1, 0x100, fp);
+	if(fp && fread(memory + 0xFF00, 1, 0x100, fp) == 0x100){
 		fclose(fp);
 	} else {
-		fprintf(stderr, "file error\n");
+		if(fp){
+			fclose(fp);
+		}
+		fprintf(stderr, "Could not load WOZMON due to file error\n");
 		exit(1);
 	}
 	reset_6502(&cpu, read_mem);//Reset the cpu
@@ -281,7 +291,7 @@ int main(){
 
 		//Handle keyboard I/O
 		if(!(count%200) && (key_hit = getch()) != ERR){
-			if(key_hit == 0x08){//Emulate the backspace character
+			if(key_hit == 0x08 || key_hit == 0x7F){//Emulate the backspace character
 				memory[0xD010] = 0xDF;
 				memory[0xD011] |= 0x80;
 			} else if(key_hit == '~'){//Emulate the control character
