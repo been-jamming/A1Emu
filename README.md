@@ -1,5 +1,5 @@
 # A1Emu
-Console based Apple 1 emulator for Windows
+Console based Apple 1 emulator for Windows and Linux
 
 To build type
 
